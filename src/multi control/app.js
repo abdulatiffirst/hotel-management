@@ -6,6 +6,7 @@ import { Container, Create, Table } from "./styled";
 import { Button, Modal, message, Popconfirm } from "antd";
 import * as XLSX from "xlsx";
 import { Link } from "react-router-dom";
+import { formLabelClasses } from "@mui/material";
 
 function MultiControll() {
   // State for creating data
@@ -111,6 +112,7 @@ function MultiControll() {
     setDays("");
     setBirthDate("");
     setPassportSeries("");
+    setIsModalOpen(false)
   };
 
   // Function to handle editing data
@@ -312,19 +314,7 @@ function MultiControll() {
                 <td>{value.leavingDay}</td>
                 <td>{value.dailyPrice}</td>
                 <td>{value.days * value.dailyPrice}</td>
-                {/* <td>
-                  <Popconfirm
-                    title="Delete the task"
-                    description="Are you sure to delete this task?"
-                    onConfirm={() => handleDelete(value)}
-                    onCancel={cancel}
-                    okText="Yes"
-                    cancelText="No"
-                    className="deleteButton"
-                  >
-                    <Button danger>Delete</Button>
-                  </Popconfirm>
-                </td> */}
+             
                 <td>
                   <button
                     className="updateButton"
@@ -334,12 +324,17 @@ function MultiControll() {
                   </button>
                 </td>
                 <td>
-                  <button
+                <Popconfirm
+                    title=""
+                    description="Leave?"
+                    onConfirm={() => handleLeaveHotel(value)}
+                    onCancel={cancel}
+                    okText="Yes"
+                    cancelText="No"
                     className="leaveHotelButton"
-                    onClick={() => handleLeaveHotel(value)}
                   >
-                    Leave Hotel
-                  </button>
+                    <Button danger>Leave Hotel</Button>
+                  </Popconfirm>
                 </td>
               </tr>
             ))}
