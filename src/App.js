@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
-
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import Write from "./components/write";
+// import Read from "./components/read";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import MultiControll from "./multi control/app";
+import { Box } from "./styledApp";
+import MainPage from "./main page/main";
+import GetInformation from "./read informations/readInformation";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   
+      <Box>
+        <Router>
+          <Routes>
+            <Route path="/" index element={<MultiControll/>} />
+            <Route path="/getInformation"  element={<GetInformation/>} />
+          </Routes>
+        </Router>
+        {/* <Write/> */}
+        {/* <MultiControll /> */}
+        {/* <MainPage/> */}
+      </Box>
+ 
   );
 }
 
