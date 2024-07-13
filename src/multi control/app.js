@@ -6,7 +6,7 @@ import { Container, Create, Table } from "./styled";
 import { Button, Modal, message, Popconfirm } from "antd";
 import * as XLSX from "xlsx";
 import { Link } from "react-router-dom";
-import { formLabelClasses } from "@mui/material";
+// import { formLabelClasses } from "@mui/material";
 
 function MultiControll() {
   // State for creating data
@@ -19,7 +19,8 @@ function MultiControll() {
   const [days, setDays] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [passportSeries, setPassportSeries] = useState("");
-
+  //Payment method
+  const [paymentMethod, setPaymentMethod] = useState("");
   // State for leave hotel functionality
   const [leaveHotelRows, setLeaveHotelRows] = useState({});
 
@@ -102,6 +103,7 @@ function MultiControll() {
       uuid,
       leaveHotel: false, // Add default leaveHotel status
       leaveHotelTime: null,
+      paymentMethod,
     });
     setName("");
     setPhoneNumber("");
@@ -112,7 +114,8 @@ function MultiControll() {
     setDays("");
     setBirthDate("");
     setPassportSeries("");
-    setIsModalOpen(false)
+    setPaymentMethod("");
+    setIsModalOpen(false);
   };
 
   // Function to handle editing data
@@ -148,6 +151,7 @@ function MultiControll() {
       leaveHotelTime: leaveHotelRows[tempUuid]
         ? new Date().toLocaleString()
         : null,
+      paymentMethod,
     });
     setEditInformations(false);
     setName("");
@@ -159,12 +163,13 @@ function MultiControll() {
     setDays("");
     setBirthDate("");
     setPassportSeries("");
+    setPaymentMethod("");
   };
 
   // Function to handle deleting data
-  const handleDelete = (inf) => {
-    remove(ref(db, `/${inf.uuid}`));
-  };
+  // const handleDelete = (inf) => {
+  //   remove(ref(db, `/${inf.uuid}`));
+  // };
 
   // Function to handle exporting data to Excel
   const handleExportToExcel = () => {
@@ -198,7 +203,9 @@ function MultiControll() {
           <Button type="primary" className="showModal" onClick={showModal}>
             Open Modal
           </Button>
-          <Link className="link" to="/getInformation">Data</Link>
+          <Link className="link" to="/getInformation">
+            Data
+          </Link>
           <Modal
             title="Add Guest"
             open={isModalOpen}
@@ -254,6 +261,14 @@ function MultiControll() {
                 value={days}
                 onChange={(e) => setDays(e.target.value)}
               />
+              <select
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              >
+                <option value="">Select payment method</option>
+                <option value="Cash">Cash</option>
+                <option value="Debit Card">Debit Card</option>
+              </select>
 
               {editInformations ? (
                 <div>
@@ -270,6 +285,7 @@ function MultiControll() {
                       setDays("");
                       setBirthDate("");
                       setPassportSeries("");
+                      setPaymentMethod("")
                     }}
                   >
                     X
@@ -294,6 +310,7 @@ function MultiControll() {
               <th>Leaving Day</th>
               <th>Daily Price</th>
               <th>Whole Price</th>
+              <th>Payment Method</th>
               {/* <th>Delete</th> */}
               <th>Update</th>
               <th>Leave Hotel</th>
@@ -314,7 +331,7 @@ function MultiControll() {
                 <td>{value.leavingDay}</td>
                 <td>{value.dailyPrice}</td>
                 <td>{value.days * value.dailyPrice}</td>
-             
+                <td>{value.paymentMethod}</td>
                 <td>
                   <button
                     className="updateButton"
@@ -324,7 +341,7 @@ function MultiControll() {
                   </button>
                 </td>
                 <td>
-                <Popconfirm
+                  <Popconfirm
                     title=""
                     description="Leave?"
                     onConfirm={() => handleLeaveHotel(value)}

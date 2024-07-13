@@ -55,6 +55,16 @@ export const Create = styled.div`
     border-radius: 10px;
   }
 
+  select{
+    width: 90%;
+    height: 40px;
+    margin: 3px 0;
+    padding: 5px;
+    background-color: black;
+    color: white;
+  }
+  
+
   button {
     width: 200px;
     padding: 10px;
