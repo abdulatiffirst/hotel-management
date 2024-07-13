@@ -66,7 +66,7 @@ function GetInformation() {
             <th>Days</th>
             <th>Daily Price</th>
             <th>Whole Price</th>
-            <th>Delete</th>
+            {/* <th>Delete</th> */}
           </tr>
           {informations.map((value, index) => (
             <tr key={value.uuid}>
@@ -83,7 +83,7 @@ function GetInformation() {
               <td>{value.days}</td>
               <td>{value.dailyPrice}</td>
               <td>{value.days * value.dailyPrice}</td>
-              <td>
+              {/* <td>
                 <Popconfirm
                   title="Delete"
                   description="Are you sure to delete this guest?"
@@ -95,7 +95,7 @@ function GetInformation() {
                 >
                   <Button danger>Delete</Button>
                 </Popconfirm>
-              </td>
+              </td> */}
             </tr>
           ))}
         </Table>
