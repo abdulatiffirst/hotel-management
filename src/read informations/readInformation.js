@@ -65,7 +65,8 @@ function GetInformation() {
             <th>Leave Hotel Time</th>
             <th>Days</th>
             <th>Daily Price</th>
-            <th>Whole Price</th>
+                      <th>Whole Price</th>
+                      <th>Payment Method</th>
             {/* <th>Delete</th> */}
           </tr>
           {informations.map((value, index) => (
@@ -82,7 +83,8 @@ function GetInformation() {
               <td>{value.leaveHotelTime}</td>
               <td>{value.days}</td>
               <td>{value.dailyPrice}</td>
-              <td>{value.days * value.dailyPrice}</td>
+                  <td>{value.days * value.dailyPrice}</td>
+                  <td>{ value.paymentMethod}</td>
               {/* <td>
                 <Popconfirm
                   title="Delete"
