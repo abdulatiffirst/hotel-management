@@ -131,6 +131,7 @@ function MultiControll() {
     setDays(value.days);
     setBirthDate(value.birthDate);
     setPassportSeries(value.passportSeries);
+    setPaymentMethod(value.paymentMethod)
     showModal();
   };
 
@@ -164,6 +165,7 @@ function MultiControll() {
     setBirthDate("");
     setPassportSeries("");
     setPaymentMethod("");
+    setIsModalOpen(false);
   };
 
   // Function to handle deleting data
@@ -285,7 +287,8 @@ function MultiControll() {
                       setDays("");
                       setBirthDate("");
                       setPassportSeries("");
-                      setPaymentMethod("")
+                      setPaymentMethod("");
+                      setIsModalOpen(false);
                     }}
                   >
                     X
