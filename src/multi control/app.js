@@ -19,7 +19,6 @@ function MultiControll() {
   const [days, setDays] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [passportSeries, setPassportSeries] = useState("");
-  //Payment method
   const [paymentMethod, setPaymentMethod] = useState("");
   // State for leave hotel functionality
   const [leaveHotelRows, setLeaveHotelRows] = useState({});
@@ -175,16 +174,33 @@ function MultiControll() {
 
   // Function to handle exporting data to Excel
   const handleExportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(informations);
+    const tableData = informations.map((value, index) => ({
+      No: index + 1,
+      Name: value.name,
+      RoomNumber: value.roomNumber,
+      ArrivalDay: value.arrivalDay,
+      LeavingDay: value.leavingDay,
+      DailyPrice: value.dailyPrice,
+      WholePrice: value.days * value.dailyPrice,
+      PaymentMethod: value.paymentMethod,
+      RgistrationTime: value.registrationTime,
+      LeavingTime: value.leaveHotelTime
+
+    }));
+  
+    const worksheet = XLSX.utils.json_to_sheet(tableData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+  
     const excelBuffer = XLSX.write(workbook, {
       bookType: "xlsx",
       type: "buffer",
     });
+  
     const data = new Blob([excelBuffer], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
+  
     const url = window.URL.createObjectURL(data);
     const a = document.createElement("a");
     a.href = url;
