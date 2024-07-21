@@ -234,7 +234,7 @@ function GetInformation() {
             <th>Daily Price</th>
             <th>Whole Price</th>
             <th>Payment Method</th>
-            <th>Edit</th>
+            {/* <th>Edit</th> */}
           </tr>
           {informations.map((value, index) => (
             <tr key={value.uuid}>
@@ -252,12 +252,12 @@ function GetInformation() {
               <td>{value.dailyPrice}</td>
               <td>{value.days * value.dailyPrice}</td>
               <td>{value.paymentMethod}</td>
-              <td> <button
+              {/* <td> <button
                     className="updateButton"
                     onClick={() => handleEdit(value)}
                   >
                     Edit
-                  </button></td>
+                  </button></td> */}
               {/* <td>
                 <Popconfirm
                   title="Delete"
