@@ -92,11 +92,6 @@ function MultiControll() {
   // Function to handle modal OK
   const handleOk = () => {
     setIsModalOpen(false);
-    // setOpen101(false);
-    // setOpen102(false);
-    // setOpen103(false);
-    // setOpen104(false);
-    // setOpen105(false);
   };
 
   // Function to handle modal cancel

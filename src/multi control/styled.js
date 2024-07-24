@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const UpdateButton = styled.button`
   background-color: #139724;
-  color: white;
+  color: black;
   border: none;
   height: 20px;
   border-radius: 4px;
@@ -12,27 +12,31 @@ export const UpdateButton = styled.button`
 export const ContainerScheme = styled.div`
   width: 100%;
 
-  background-color: black;
-  color: white;
+  background-color: #242424;
+  color: balck;
+
   /* padding: 10px; */
   .room {
-      overflow-y: scroll;
-    }
-  .roomCont{
+    overflow-y: scroll;
+    background-color: #333333;
+  }
+  .roomCont {
     height: fit-content;
     display: flex;
-    }
+  }
   h1 {
     margin: 20px 0 10px 10px;
-  
+    color: #ff5722;
     padding: 5px 0;
   }
-  h4{
+  h4 {
     position: sticky;
+    color: #ffffff;
   }
-  p{
+  p {
     font-size: 12px;
-    margin: 2px 0;
+    margin: 2px 0px;
+    color: white;
   }
   .Buttons {
     width: 100%;
@@ -41,7 +45,7 @@ export const ContainerScheme = styled.div`
     font-size: 20px;
     top: 0px;
     position: fixed;
-    background-color: black;
+    background-color: #1a1a1b;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,7 +53,7 @@ export const ContainerScheme = styled.div`
     .exportToExcel {
       width: 100px;
       height: 30px;
-      background-color: green;
+      background-color: #4caf50;
       color: white;
       border-radius: 4px;
       border: none;
@@ -70,7 +74,7 @@ export const ContainerScheme = styled.div`
       .roomCont {
         padding: 5px;
         width: 100%;
-       
+
         overflow-y: auto;
       }
       h4 {
@@ -88,9 +92,9 @@ export const ContainerScheme = styled.div`
         font-size: 12px;
       }
       .name {
-        background-color: white;
+        background-color: #4caf50;
         padding: 3px;
-        color: black;
+        color: white;
         border-radius: 5px;
       }
       .arrisvalDay {
@@ -98,7 +102,7 @@ export const ContainerScheme = styled.div`
       .dailyPrice {
       }
       .leaveHotelButton {
-        background-color: red;
+        background-color: #f44336;
         color: white;
         border: none;
         padding: 3px 7px;
@@ -123,7 +127,7 @@ export const ContainerScheme = styled.div`
         .room {
           width: 100%;
           height: 25%;
-          border: 1px solid white;
+          border: 1px solid #3c3c3c;
         }
       }
       .middle {
@@ -140,10 +144,11 @@ export const ContainerScheme = styled.div`
           height: 35%;
           /* border: 1px solid white; */
           .room {
-            border: 1px solid white;
+            border: 1px solid #3c3c3c;
           }
           .pantry {
             width: 30%;
+            color: white;
           }
           .r107 {
             width: 70%;
@@ -154,9 +159,9 @@ export const ContainerScheme = styled.div`
           width: 100%;
           height: 40%;
           .room {
-            border: 1px solid white;
+            border: 1px solid #3c3c3c;
           }
-          .roomCont{
+          .roomCont {
             flex-direction: column;
           }
           .r105 {
@@ -176,15 +181,15 @@ export const ContainerScheme = styled.div`
         .room {
           width: 100%;
           height: 20%;
-          border: 1px solid white;
+          border: 1px solid #3c3c3c;
 
-        
           p {
             font-size: 12px;
-            margin: 3px ;
+            margin: 3px;
           }
           .leaveHotelButton {
-            background-color: red;
+            background-color: #f44336;
+
             color: white;
             border: none;
             padding: 6px 8px;
@@ -202,7 +207,6 @@ export const ContainerScheme = styled.div`
     padding: 10px;
     /* border-top: 1px solid white; */
 
-
     h4 {
       border-bottom: 1px solid gray;
       margin-bottom: 4px;
@@ -215,14 +219,12 @@ export const ContainerScheme = styled.div`
     }
     .room {
       padding: 3px;
-
- 
     }
 
     .name {
-      background-color: white;
+      background-color: #4caf50;
       padding: 3px;
-      color: black;
+      color: white;
       border-radius: 5px;
     }
     .arrivalDay {
@@ -230,7 +232,7 @@ export const ContainerScheme = styled.div`
     .dailyPrice {
     }
     .leaveHotelButton {
-      background-color: red;
+      background-color: #f44336;
       color: white;
       border: none;
       padding: 3px 7px;
@@ -247,7 +249,7 @@ export const ContainerScheme = styled.div`
     height: calc(100vh - 40px);
 
     .room {
-      border: 1px solid white;
+      border: 1px solid #3c3c3c;
     }
     .column-1 {
       display: flex;
@@ -262,7 +264,7 @@ export const ContainerScheme = styled.div`
         .room {
           width: 20%;
         }
-        .roomCont{
+        .roomCont {
           flex-direction: column;
         }
       }
@@ -292,7 +294,7 @@ export const ContainerScheme = styled.div`
         width: 60%;
         .room {
           height: 33%;
-       overflow-y: scroll;
+          overflow-y: scroll;
         }
         .centerColumn-1 {
           width: 50%;
@@ -308,13 +310,13 @@ export const ContainerScheme = styled.div`
       display: flex;
       width: 100%;
       height: 30%;
-      .roomCont{
-          flex-direction: column;
-        }
+      .roomCont {
+        flex-direction: column;
+      }
       .room {
         width: 20%;
         height: 100%;
-        p{
+        p {
           margin: 5px;
           font-size: 12px;
         }
@@ -326,10 +328,10 @@ export const ContainerScheme = styled.div`
       .room {
         height: 20%;
         p {
-              height: fit-content;
-              padding: 3px;
-              font-size: 12px;
-            }
+          height: fit-content;
+          padding: 3px;
+          font-size: 12px;
+        }
       }
     }
   }
@@ -349,7 +351,7 @@ export const Container = styled.div`
   text-align: center;
 
   .link {
-    color: white;
+    color: black;
   }
 
   .buttonsContainer {
@@ -363,15 +365,25 @@ export const Container = styled.div`
   .buttonsContainer2 {
     width: 95vw;
     padding: 15px 0 20px 0;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .link2 {
       color: white;
+    }
+    input{
+      width: 400px;
+      height: 30px;
+      margin-left: 40px;
+      padding: 3px;
+      border-radius: 5px;
+      
     }
   }
   .exportToExcel {
     width: 100px;
     height: 30px;
-    background-color: green;
+    background-color: #4caf50;
     color: white;
     border-radius: 4px;
     border: none;
@@ -388,7 +400,7 @@ export const Create = styled.div`
     height: 31px;
     margin: 3px 0;
     padding: 10px;
-    border: 1px solid black;
+    border: 1px solid #3c3c3c;
     border-radius: 10px;
   }
 
@@ -398,14 +410,14 @@ export const Create = styled.div`
     margin: 3px 0;
     padding: 5px;
     background-color: black;
-    color: white;
+    color: #b0b0b0;
   }
 
   button {
     width: 200px;
     padding: 10px;
     background-color: #1677ff;
-    color: white;
+    color: black;
     border: none;
     border-radius: 10px;
     margin-top: 10px;
@@ -416,7 +428,9 @@ export const Table = styled.table`
   /* background-color: yellow; */
   width: 95vw;
   border-radius: 5px;
-
+  tr:nth-child(even) {
+    background-color: gray;
+  }
   tr {
     th {
       background-color: gray;
@@ -431,7 +445,7 @@ export const Table = styled.table`
 
       .deleteButton {
         background-color: #c70039;
-        color: white;
+        color: #b0b0b0;
         border: none;
         padding: 3px 7px;
         height: 20px;
@@ -439,14 +453,14 @@ export const Table = styled.table`
       }
       .updateButton {
         background-color: #139724;
-        color: white;
+        color: #b0b0b0;
         border: none;
         height: 20px;
         border-radius: 4px;
         padding: 3px 7px;
       }
       .leaveHotelButton {
-        background-color: red;
+        background-color: #f44336;
         color: white;
         border: none;
         padding: 3px 7px;
