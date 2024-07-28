@@ -1367,6 +1367,7 @@ function MultiControll() {
                   >
                     <b>209</b>/<BedroomChildIcon className="i" />
                     <BedroomChildIcon className="i" />
+                    <BedroomChildIcon className="i" />
                   </h4>
                   {informations
                     .filter((value) => value.roomNumber === "209")
