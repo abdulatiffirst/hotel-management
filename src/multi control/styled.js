@@ -11,10 +11,11 @@ export const UpdateButton = styled.button`
 
 export const ContainerScheme = styled.div`
   width: 100%;
-
-  background-color: #242424;
-  color: balck;
-
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   /* padding: 10px; */
   .room {
     overflow-y: scroll;
@@ -66,7 +67,7 @@ export const ContainerScheme = styled.div`
     width: 100vw;
     height: 100vh;
     /* background-color: red; */
-    margin-top: 50px;
+    /* margin-top: 10px; */
     padding: 10px;
     .room {
       padding: 3px;
@@ -371,13 +372,12 @@ export const Container = styled.div`
     .link2 {
       color: white;
     }
-    input{
+    input {
       width: 400px;
       height: 30px;
       margin-left: 40px;
       padding: 3px;
       border-radius: 5px;
-      
     }
   }
   .exportToExcel {
@@ -426,8 +426,11 @@ export const Create = styled.div`
 
 export const Table = styled.table`
   /* background-color: yellow; */
-  width: 95vw;
+
+  height: 90vh;
   border-radius: 5px;
+  margin: 10px 0;
+  overflow-y: scroll;
   tr:nth-child(even) {
     background-color: gray;
   }
@@ -442,7 +445,7 @@ export const Table = styled.table`
       background-color: rgba(22, 22, 23, 0.8);
       color: white;
       padding: 5px;
-
+      text-align: center;
       .deleteButton {
         background-color: #c70039;
         color: #b0b0b0;
@@ -453,7 +456,7 @@ export const Table = styled.table`
       }
       .updateButton {
         background-color: #139724;
-        color: #b0b0b0;
+        color: white;
         border: none;
         height: 20px;
         border-radius: 4px;
@@ -469,4 +472,13 @@ export const Table = styled.table`
       }
     }
   }
+`;
+
+export const ToggleButton = styled.button`
+  margin: 60px 0 0 15px;
+  padding: 5px;
+  border: none;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
 `;

@@ -8,6 +8,7 @@ import {
   Table,
   ContainerScheme,
   UpdateButton,
+  ToggleButton,
 } from "./styled";
 import { Button, Modal, message, Popconfirm } from "antd";
 import * as XLSX from "xlsx";
@@ -28,8 +29,12 @@ function MultiControll() {
   const [birthDate, setBirthDate] = useState("");
   const [passportSeries, setPassportSeries] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
+
   // State for leave hotel functionality
   const [leaveHotelRows, setLeaveHotelRows] = useState({});
+
+  //State for switch
+  const [switch1, setSwitch1] = useState(true)
 
   // State for reading data
   const [informations, setInformations] = useState([]);
@@ -277,6 +282,7 @@ function MultiControll() {
         <Button type="primary" className="showModal" onClick={showModal}>
           Open Modal
         </Button>
+        
         <Link className="link" to="/getInformation">
           Data
         </Link>
@@ -537,7 +543,13 @@ function MultiControll() {
         </Table>
       </div> */}
       </>
-      <div className="firstFloor">
+      <ToggleButton
+        onClick={() => setSwitch1(!switch1)}
+        
+      >
+        Switch
+      </ToggleButton>
+      <div className="firstFloor"  style={switch1 ? { display: "block" } : { display: "none" }}>
         <h1>First floor</h1>
         <div className="firstFloorScheme">
           <div className="r101-104">
@@ -1113,7 +1125,7 @@ function MultiControll() {
           </div>
         </div>
       </div>
-      <div className="secondFloor">
+      <div className="secondFloor"  style={switch1 ? { display: "block" } : { display: "none" }}>
         <h1>Second floor</h1>
         <div className="secondFloorScheme">
           <div className="column-1">
@@ -2002,6 +2014,63 @@ function MultiControll() {
             </div>
           ))}
       </Modal>
+      <Table style={switch1 ? { display: "none" } : { display: "block" }}>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Name</th>
+              <th>Room Number</th>
+              <th>Arrival Day</th>
+              <th>Leaving Day</th>
+              <th>Daily Price</th>
+              <th>Whole Price</th>
+              <th>Payment Method</th>
+            
+              <th>Update</th>
+              <th>Leave Hotel</th>
+            </tr>
+          </thead>
+          <tbody>
+            {informations.map((value, index) => (
+              <tr
+                style={{
+                  display: leaveHotelRows[value.uuid] ? "none" : "",
+                }}
+                key={value.uuid}
+              >
+                <td>{index + 1}</td>
+                <td>{value.name}</td>
+                <td>{value.roomNumber}</td>
+                <td>{value.arrivalDay}</td>
+                <td>{value.leavingDay}</td>
+                <td>{value.dailyPrice}</td>
+                <td>{value.days * value.dailyPrice}</td>
+                <td>{value.paymentMethod}</td>
+                <td>
+                  <button
+                    className="updateButton"
+                    onClick={() => handleEdit(value)}
+                  >
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <Popconfirm
+                    title=""
+                    description="Leave?"
+                    onConfirm={() => handleLeaveHotel(value)}
+                    onCancel={cancel}
+                    okText="Yes"
+                    cancelText="No"
+                    className="leaveHotelButton"
+                  >
+                    <Button danger>Leave</Button>
+                  </Popconfirm>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
     </ContainerScheme>
   );
 }
