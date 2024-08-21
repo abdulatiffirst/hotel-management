@@ -249,8 +249,8 @@ function GetInformation() {
               <th>Daily Price</th>
               <th>Whole Price</th>
               <th>Payment Method</th>
-              <th>Edit</th>
-              <th>Delete</th>
+              {/* <th>Edit</th> */}
+              {/* <th>Delete</th> */}
             </tr>
           </thead>
           <tbody>
