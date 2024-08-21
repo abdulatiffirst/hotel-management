@@ -362,6 +362,7 @@ function MultiControll() {
               <option value="">Select payment method</option>
               <option value="Cash">Cash</option>
               <option value="Debit Card">Debit Card</option>
+              <option value="Contract">Contract</option>
             </select>
 
             {editInformations ? (
