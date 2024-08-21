@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Container, Create, Table } from "../multi control/styled";
+import { Container, Create, Table } from "./styled";
 import { ref, onValue, remove, update } from "firebase/database";
 import { db } from "../firebaseConfig";
 import { Link } from "react-router-dom";
 import { Modal, message, Popconfirm } from "antd";
-
 function GetInformation() {
   // State for creating data
   const [name, setName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [arrivalDay, setArrivalDay] = useState("");
   const [leavingDay, setLeavingDay] = useState("");
@@ -52,7 +50,7 @@ function GetInformation() {
     setEditInformations(true);
     setName(value.name);
     setTempUuid(value.uuid);
-    setPhoneNumber(value.phoneNumber);
+    
     setArrivalDay(value.arrivalDay);
     setRoomNumber(value.roomNumber);
     setLeavingDay(value.leavingDay);
@@ -68,7 +66,6 @@ function GetInformation() {
   const handleSubmitChange = () => {
     update(ref(db, `/${tempUuid}`), {
       name,
-      phoneNumber,
       roomNumber,
       arrivalDay,
       leavingDay,
@@ -85,7 +82,6 @@ function GetInformation() {
     });
     setEditInformations(false);
     setName("");
-    setPhoneNumber("");
     setArrivalDay("");
     setRoomNumber("");
     setLeavingDay("");
@@ -121,10 +117,7 @@ function GetInformation() {
   };
 
   //Function popconfirm
-  const cancel = (e) => {
-    console.log(e);
-    message.error("Click on No");
-  };
+ 
   // Function to filter data based on search input
   const filteredInformations = informations.filter((info) => {
     return (
@@ -136,6 +129,7 @@ function GetInformation() {
       info.leavingDay.toLowerCase().includes(search.toLowerCase())
     );
   });
+
   return (
     <Container>
       <div>
@@ -209,7 +203,6 @@ function GetInformation() {
                 onClick={() => {
                   setEditInformations(false);
                   setName("");
-                  setPhoneNumber("");
                   setArrivalDay("");
                   setRoomNumber("");
                   setLeavingDay("");
@@ -241,51 +234,61 @@ function GetInformation() {
         </div>
 
         <Table>
-          <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Passport Series</th>
-            <th>Date of Birth</th>
-            <th>Room Namber</th>
-            {/* <th>Phone Number</th> */}
-            <th>Arrival Day</th>
-            <th>Leaving Day</th>
-            {/* <th>Guests Quintity</th> */}
-            <th>Registsration time</th>
-            <th>Leave Hotel Time</th>
-            <th>Days</th>
-            <th>Daily Price</th>
-            <th>Whole Price</th>
-            <th>Payment Method</th>
-            {/* <th>Edit</th> */}
-          </tr>
-          {filteredInformations.map((value, index) => (
-            <tr key={value.uuid}>
-              <td>{index + 1}</td>
-              <td>{value.name}</td>
-              <td>{value.passportSeries}</td>
-              <td>{value.birthDate}</td>
-              {/* <th>{value.phoneNumber}</th> */}
-              <td>{value.roomNumber}</td>
-              <td>{value.arrivalDay}</td>
-              <td>{value.leavingDay}</td>
-              <td>{value.registrationTime}</td>
-              <td>{value.leaveHotelTime}</td>
-              <td>{value.days}</td>
-              <td>{value.dailyPrice}</td>
-              <td>{value.days * value.dailyPrice}</td>
-              <td>{value.paymentMethod}</td>
-              {/* <td> <button
-                    className="updateButton"
-                    onClick={() => handleEdit(value)}
-                  >
-                    Edit
-                  </button></td>  */}
-               {/* <td> */}
-               {/* <button onClick={() => handleDelete(value)}>Delete</button> */}
-              {/* </td>  */}
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Name</th>
+              <th>Passport Series</th>
+              <th>Date of Birth</th>
+              <th>Room Number</th>
+              <th>Arrival Day</th>
+              <th>Leaving Day</th>
+              <th>Registration Time</th>
+              <th>Leave Hotel Time</th>
+              <th>Days</th>
+              <th>Daily Price</th>
+              <th>Whole Price</th>
+              <th>Payment Method</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {filteredInformations.map((value, index) => {
+           
+
+              return (
+                <tr key={value.uuid}>
+                  <td>{index + 1}</td>
+                  <td>{value.name}</td>
+                  <td className="passportSeries">{value.passportSeries}</td>
+                  <td>{value.birthDate}</td>
+                  {/* <td>{value.phoneNumber}</td> */}
+                  <td>{value.roomNumber}</td>
+                  <td>{value.arrivalDay}</td>
+                  <td>{value.leavingDay || "Not Checked Out"}</td>
+                  <td>{value.registrationTime}</td>
+                  <td>{value.leaveHotelTime}</td>
+                  <td>{value.days}</td>
+                  <td>{value.dailyPrice}</td>
+                  <td>{value.days * value.dailyPrice}</td>
+                  <td>{value.paymentMethod}</td>
+                  <td>
+                    <button
+                      className="updateButton"
+                      onClick={() => handleEdit(value)}
+                    >
+                      Edit
+                    </button>
+                  </td>
+                 
+                  <td>
+            <button onClick={() => handleDelete(value)}>Delete</button>
+          </td>
+                </tr>
+              );
+            })}
+          </tbody>
         </Table>
       </div>
     </Container>

@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const UpdateButton = styled.button`
   background-color: #139724;
-  color: black;
+  color: white;
   border: none;
-  height: 20px;
   border-radius: 4px;
-  padding: 3px 7px;
+  padding: 3px 12px;
+  margin: 3px 0;
 `;
 
 export const ContainerScheme = styled.div`
@@ -17,13 +17,28 @@ export const ContainerScheme = styled.div`
   align-items: center;
   justify-content: center;
   /* padding: 10px; */
+
+  .name {
+    text-transform: capitalize;
+    background-color: #4caf50;
+    padding: 3px;
+    color: white;
+    border-radius: 5px;
+  }
+
   .room {
     overflow-y: scroll;
     background-color: #333333;
+    border: 1px solid #3c3c3c;
+    padding: 4px;
   }
   .roomCont {
     height: fit-content;
     display: flex;
+    padding: 5px;
+    width: 100%;
+    overflow-y: auto;
+    flex-direction: column;
   }
   h1 {
     margin: 20px 0 10px 10px;
@@ -33,12 +48,30 @@ export const ContainerScheme = styled.div`
   h4 {
     position: sticky;
     color: #ffffff;
+    border-bottom: 1px solid gray;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    .i {
+      font-size: 20px;
+    }
   }
   p {
-    font-size: 12px;
-    margin: 2px 0px;
-    color: white;
+    height: fit-content;
+          padding: 2px;
+          font-size: 12px;
+          color: white;
   }
+  .leaveHotelButton {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 3px 7px;
+      height: 20px;
+      border-radius: 4px;
+      margin-left: 3px;
+    }
   .Buttons {
     width: 100%;
     height: 50px;
@@ -69,48 +102,24 @@ export const ContainerScheme = styled.div`
     /* background-color: red; */
     /* margin-top: 10px; */
     padding: 10px;
-    .room {
+
+    h4 {
+      border-bottom: 1px solid gray;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
       padding: 3px;
+      .i {
+        font-size: 20px;
+      }
 
-      .roomCont {
-        padding: 5px;
-        width: 100%;
+ 
 
-        overflow-y: auto;
-      }
-      h4 {
-        border-bottom: 1px solid gray;
-        margin-bottom: 4px;
-        display: flex;
-        align-items: center;
-        padding: 3px;
-        .i {
-          font-size: 20px;
-        }
-      }
-      p {
-        margin: 3px;
-        font-size: 12px;
-      }
-      .name {
-        background-color: #4caf50;
-        padding: 3px;
-        color: white;
-        border-radius: 5px;
-      }
       .arrisvalDay {
       }
       .dailyPrice {
       }
-      .leaveHotelButton {
-        background-color: #f44336;
-        color: white;
-        border: none;
-        padding: 3px 7px;
-        height: 20px;
-        border-radius: 4px;
-        margin-left: 3px;
-      }
+    
     }
     .firstFloorScheme {
       height: calc(100% - 40px);
@@ -128,7 +137,6 @@ export const ContainerScheme = styled.div`
         .room {
           width: 100%;
           height: 25%;
-          border: 1px solid #3c3c3c;
         }
       }
       .middle {
@@ -144,9 +152,7 @@ export const ContainerScheme = styled.div`
           width: 100%;
           height: 35%;
           /* border: 1px solid white; */
-          .room {
-            border: 1px solid #3c3c3c;
-          }
+
           .pantry {
             width: 30%;
             color: white;
@@ -159,12 +165,7 @@ export const ContainerScheme = styled.div`
           display: flex;
           width: 100%;
           height: 40%;
-          .room {
-            border: 1px solid #3c3c3c;
-          }
-          .roomCont {
-            flex-direction: column;
-          }
+
           .r105 {
             width: 30%;
           }
@@ -182,12 +183,7 @@ export const ContainerScheme = styled.div`
         .room {
           width: 100%;
           height: 20%;
-          border: 1px solid #3c3c3c;
 
-          p {
-            font-size: 12px;
-            margin: 3px;
-          }
           .leaveHotelButton {
             background-color: #f44336;
 
@@ -208,39 +204,11 @@ export const ContainerScheme = styled.div`
     padding: 10px;
     /* border-top: 1px solid white; */
 
-    h4 {
-      border-bottom: 1px solid gray;
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      padding: 3px;
-      .i {
-        font-size: 20px;
-      }
-    }
-    .room {
-      padding: 3px;
-    }
-
-    .name {
-      background-color: #4caf50;
-      padding: 3px;
-      color: white;
-      border-radius: 5px;
-    }
     .arrivalDay {
     }
     .dailyPrice {
     }
-    .leaveHotelButton {
-      background-color: #f44336;
-      color: white;
-      border: none;
-      padding: 3px 7px;
-      height: 20px;
-      border-radius: 4px;
-      margin-left: 3px;
-    }
+ 
   }
 
   .secondFloorScheme {
@@ -249,9 +217,6 @@ export const ContainerScheme = styled.div`
     width: 100%;
     height: calc(100vh - 40px);
 
-    .room {
-      border: 1px solid #3c3c3c;
-    }
     .column-1 {
       display: flex;
       flex-direction: column;
@@ -264,9 +229,6 @@ export const ContainerScheme = styled.div`
         height: 30%;
         .room {
           width: 20%;
-        }
-        .roomCont {
-          flex-direction: column;
         }
       }
       .row {
@@ -281,11 +243,7 @@ export const ContainerScheme = styled.div`
           .room {
             height: 33%;
 
-            p {
-              height: fit-content;
-              padding: 3px;
-              font-size: 12px;
-            }
+     
           }
         }
       }
@@ -295,7 +253,6 @@ export const ContainerScheme = styled.div`
         width: 60%;
         .room {
           height: 33%;
-          overflow-y: scroll;
         }
         .centerColumn-1 {
           width: 50%;
@@ -311,16 +268,11 @@ export const ContainerScheme = styled.div`
       display: flex;
       width: 100%;
       height: 30%;
-      .roomCont {
-        flex-direction: column;
-      }
+
       .room {
         width: 20%;
         height: 100%;
-        p {
-          margin: 5px;
-          font-size: 12px;
-        }
+  
       }
     }
     .r217-223 {
@@ -328,11 +280,7 @@ export const ContainerScheme = styled.div`
       height: 80%;
       .room {
         height: 20%;
-        p {
-          height: fit-content;
-          padding: 3px;
-          font-size: 12px;
-        }
+     
       }
     }
   }
@@ -340,88 +288,13 @@ export const ContainerScheme = styled.div`
 
 /////////////////////////////////////////////////////////
 
-export const Container = styled.div`
-  background-color: black;
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 20px;
-  text-align: center;
-
-  .link {
-    color: black;
-  }
-
-  .buttonsContainer {
-    width: 95vw;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-  }
-  .buttonsContainer2 {
-    width: 95vw;
-    padding: 15px 0 20px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .link2 {
-      color: white;
-    }
-    input {
-      width: 400px;
-      height: 30px;
-      margin-left: 40px;
-      padding: 3px;
-      border-radius: 5px;
-    }
-  }
-  .exportToExcel {
-    width: 100px;
-    height: 30px;
-    background-color: #4caf50;
-    color: white;
-    border-radius: 4px;
-    border: none;
-  }
-  .showModal {
-    margin: 10px 0;
-  }
-`;
-export const Create = styled.div`
-  text-align: center;
-
-  input {
-    width: 90%;
-    height: 31px;
-    margin: 3px 0;
-    padding: 10px;
-    border: 1px solid #3c3c3c;
-    border-radius: 10px;
-  }
-
-  select {
-    width: 90%;
-    height: 40px;
-    margin: 3px 0;
-    padding: 5px;
-    background-color: black;
-    color: #b0b0b0;
-  }
-
-  button {
-    width: 200px;
-    padding: 10px;
-    background-color: #1677ff;
-    color: black;
-    border: none;
-    border-radius: 10px;
-    margin-top: 10px;
-  }
+export const ToggleButton = styled.button`
+  margin: 60px 0 0 15px;
+  padding: 5px;
+  border: none;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
 `;
 
 export const Table = styled.table`
@@ -431,6 +304,8 @@ export const Table = styled.table`
   border-radius: 5px;
   margin: 10px 0;
   overflow-y: scroll;
+  text-transform: capitalize;
+
   tr:nth-child(even) {
     background-color: gray;
   }
@@ -474,11 +349,35 @@ export const Table = styled.table`
   }
 `;
 
-export const ToggleButton = styled.button`
-  margin: 60px 0 0 15px;
-  padding: 5px;
-  border: none;
-  background-color: white;
-  color: black;
-  border-radius: 5px;
+export const Create = styled.div`
+  text-align: center;
+
+  input {
+    width: 90%;
+    height: 31px;
+    margin: 3px 0;
+    padding: 10px;
+    border: 1px solid #3c3c3c;
+    border-radius: 10px;
+  }
+
+  select {
+    width: 90%;
+    height: 40px;
+    margin: 3px 0;
+    padding: 5px;
+    background-color: black;
+    color: white;
+  }
+
+  button {
+    width: 200px;
+    padding: 10px;
+    background-color: #1677ff;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  
 `;

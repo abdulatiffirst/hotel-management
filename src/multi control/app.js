@@ -3,7 +3,6 @@ import { db } from "../firebaseConfig";
 import { uid } from "uid";
 import { set, ref, onValue, remove, update } from "firebase/database";
 import {
-  Container,
   Create,
   Table,
   ContainerScheme,
@@ -73,12 +72,15 @@ function MultiControll() {
   // const [open211, setOpen211] = useState(false);
   // const [open212, setOpen212] = useState(false);
 
+  
+  
   //Function to more information}
 
   const [openRoom, setOpenRoom] = useState(false);
   const handleOpenModal = () => {
     setOpenRoom(true);
   };
+  
 
   const handleCloseModal = () => {
     setOpenRoom(false);
@@ -95,18 +97,21 @@ function MultiControll() {
   };
 
   // Function to handle modal OK
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
+  
 
   // Function to handle modal cancel
   const handleCancel = () => {
     setIsModalOpen(false);
-    // setOpen101(false);
-    // setOpen102(false);
-    // setOpen103(false);
-    // setOpen104(false);
-    // setOpen105(false);
+    setName("");
+    setPhoneNumber("");
+    setArrivalDay("");
+    setRoomNumber("");
+    setLeavingDay("");
+    setDailyPrice("");
+    setDays("");
+    setBirthDate("");
+    setPassportSeries("");
+    setPaymentMethod("");
   };
 
   // Function to handle leaving hotel
@@ -276,6 +281,14 @@ function MultiControll() {
     message.error("Click on No");
   };
 
+  const handleOk = () => {
+    if (name && roomNumber && arrivalDay && dailyPrice && birthDate && paymentMethod && days) {
+      writeToDatabase();
+      setIsModalOpen(false);
+    } else {
+      message.error("Please fill in all fields")
+    }
+  };
   return (
     <ContainerScheme>
       <div className="Buttons">
@@ -293,6 +306,7 @@ function MultiControll() {
           onCancel={handleCancel}
         >
           <Create>
+            
             <input
               type="text"
               placeholder="Name"
@@ -373,12 +387,12 @@ function MultiControll() {
                 </button>
               </div>
             ) : (
-              <button onClick={writeToDatabase}>Submit</button>
+             <></>
             )}
           </Create>
         </Modal>
         <button className="exportToExcel" onClick={handleExportToExcel}>
-          Export to Excel
+        Export To Excel
         </button>
       </div>
 
@@ -1971,7 +1985,7 @@ function MultiControll() {
             <div
               key={index}
               style={{
-                display: leaveHotelRows[value.uuid] ? "none" : "",
+                display: leaveHotelRows[value.uuid] ? "none" : "", borderBottom:"1px solid gray", padding:"5px"
               }}
             >
               <p>Name: {value.name}</p>
