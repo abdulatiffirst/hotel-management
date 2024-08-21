@@ -273,18 +273,18 @@ function GetInformation() {
                   <td>{value.dailyPrice}</td>
                   <td>{value.days * value.dailyPrice}</td>
                   <td>{value.paymentMethod}</td>
-                  <td>
+                  {/* <td>
                     <button
                       className="updateButton"
                       onClick={() => handleEdit(value)}
                     >
                       Edit
                     </button>
-                  </td>
+                  </td> */}
                  
-                  <td>
+                  {/* <td>
             <button onClick={() => handleDelete(value)}>Delete</button>
-          </td>
+          </td> */}
                 </tr>
               );
             })}
