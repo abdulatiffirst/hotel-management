@@ -128,6 +128,10 @@ function GetInformation() {
       info.arrivalDay.toLowerCase().includes(search.toLowerCase()) ||
       info.leavingDay.toLowerCase().includes(search.toLowerCase())
     );
+  }).sort((a, b) => {
+    const arrivalDayA = new Date(a.arrivalDay);
+    const arrivalDayB = new Date(b.arrivalDay);
+    return arrivalDayA - arrivalDayB;
   });
 
   return (
@@ -250,7 +254,7 @@ function GetInformation() {
               <th>Whole Price</th>
               <th>Payment Method</th>
               {/* <th>Edit</th> */}
-              {/* <th>Delete</th> */}
+              {/* <th>Delete</th>  */}
             </tr>
           </thead>
           <tbody>
