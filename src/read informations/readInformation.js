@@ -129,9 +129,13 @@ function GetInformation() {
       info.leavingDay.toLowerCase().includes(search.toLowerCase())
     );
   }).sort((a, b) => {
-    const arrivalDayA = new Date(a.arrivalDay);
-    const arrivalDayB = new Date(b.arrivalDay);
-    return arrivalDayA - arrivalDayB;
+    if (!a.leaveHotel && b.leaveHotel) return -1; // prioritize those who haven't checked out
+    if (a.leaveHotel && !b.leaveHotel) return 1;
+    if (a.arrivalDay === b.arrivalDay) {
+      return a.roomNumber - b.roomNumber;
+    } else {
+      return new Date(a.arrivalDay) - new Date(b.arrivalDay);
+    }
   });
 
   return (
