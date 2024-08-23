@@ -311,7 +311,7 @@ function MultiControll() {
               type="text"
               placeholder="Name"
               value={name}
-              onChange={(e) => setName(e.target.value.toUpperCase())}
+              onChange={(e) => setName(e.target.value)}
             />
             <input
               type="date"
