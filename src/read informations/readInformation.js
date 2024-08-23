@@ -134,7 +134,7 @@ function GetInformation() {
     if (a.arrivalDay === b.arrivalDay) {
       return a.roomNumber - b.roomNumber;
     } else {
-      return new Date(a.arrivalDay) - new Date(b.arrivalDay);
+      return new Date(b.arrivalDay) - new Date(a.arrivalDay);
     }
   });
 
