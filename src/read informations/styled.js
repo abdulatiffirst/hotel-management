@@ -85,8 +85,7 @@ export const Create = styled.div`
 
 export const Table = styled.table`
   /* background-color: yellow; */
-
-  height: 90vh;
+width: 96vw;
   border-radius: 5px;
   margin: 10px 0;
   overflow-y: scroll;
