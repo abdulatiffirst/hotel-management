@@ -152,7 +152,7 @@ function GetInformation() {
               type="text"
               placeholder="Name"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value.toUpperCase())}
             />
             <input
               type="date"
@@ -164,7 +164,7 @@ function GetInformation() {
               type="text"
               placeholder="Passport series"
               value={passportSeries}
-              onChange={(e) => setPassportSeries(e.target.value)}
+              onChange={(e) => setPassportSeries(e.target.value.toUpperCase())}
             />
             <input
               type="number"
@@ -203,6 +203,7 @@ function GetInformation() {
               <option value="">Select payment method</option>
               <option value="Cash">Cash</option>
               <option value="Debit Card">Debit Card</option>
+              <option value="COntract">Contract</option>
             </select>
 
             <div>
