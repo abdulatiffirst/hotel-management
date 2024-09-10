@@ -1,13 +1,11 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background-color: black;
+  background-color: #1B4235;
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  overflow: auto;
+
   padding: 20px;
   text-align: center;
 
@@ -15,26 +13,33 @@ export const Container = styled.div`
     color: black;
   }
 
-  
   .buttonsContainer2 {
-    width: 95vw;
+    width: 90%;
     padding: 15px 0 20px 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    
     .link2 {
-      color: white;
+      color: #1b4235;
+        text-decoration: none;
+        background-color: white;
+        padding: 7px;
+        border-radius: 15px;
+        box-shadow: 0 0 100px black;
+        margin: 0 7px;
     }
     input {
-      width: 400px;
+      width: 40%;
       height: 30px;
       margin-left: 40px;
       padding: 3px;
       border-radius: 5px;
+      border: none;
     }
   }
   .exportToExcel {
-    width: 100px;
+    width: 10%;
     height: 30px;
     background-color: #4caf50;
     color: white;
@@ -43,13 +48,13 @@ export const Container = styled.div`
   }
   .showModal {
     margin: 10px 0;
+
+   
   }
 `;
 
 export const Create = styled.div`
   text-align: center;
-
-
 
   input {
     width: 90%;
@@ -70,7 +75,7 @@ export const Create = styled.div`
   }
 
   button {
-    width: 200px;
+    width: 20%;
     padding: 10px;
     background-color: #1677ff;
     color: black;
@@ -80,25 +85,26 @@ export const Create = styled.div`
   }
 `;
 
-
-
-
 export const Table = styled.table`
   /* background-color: yellow; */
-width: 96vw;
+  width: 99%;
   border-radius: 5px;
-  margin: 10px 0;
-  overflow-y: scroll;
+  margin:0.4%;
   text-transform: capitalize;
-
+  overflow-y: hidden;
   tr:nth-child(even) {
     background-color: gray;
   }
   tr {
+  
+  
+
     th {
       background-color: gray;
       color: white;
       padding: 5px;
+      border-radius: 5px;
+
     }
 
     td {
@@ -106,6 +112,7 @@ width: 96vw;
       color: white;
       padding: 5px;
       text-align: center;
+      border-radius: 5px;
       .deleteButton {
         background-color: #c70039;
         color: #b0b0b0;
@@ -133,7 +140,7 @@ width: 96vw;
     }
   }
 
-  .passportSeries{
+  .passportSeries {
     text-transform: uppercase;
   }
-  `
+`;

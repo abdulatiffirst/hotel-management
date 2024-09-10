@@ -140,7 +140,7 @@ function GetInformation() {
 
   return (
     <Container>
-      <div>
+  
         <Modal
           title="Add Guest"
           open={isModalOpen}
@@ -230,8 +230,11 @@ function GetInformation() {
         </Modal>
         <div className="buttonsContainer2">
           <div>
+            <Link className="link2" to="/multiControll">
+              Dashboard
+            </Link>
             <Link className="link2" to="/">
-              Create
+              Home
             </Link>
           </div>
           <input
@@ -299,7 +302,7 @@ function GetInformation() {
             })}
           </tbody>
         </Table>
-      </div>
+    
     </Container>
   );
 }

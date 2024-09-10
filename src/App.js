@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MultiControll from "./multi control/app";
 import { Box } from "./styledApp";
 import GetInformation from "./read informations/readInformation";
+import HomePage from "./Home Page/home";
 import ReportsPage from "./Reports/reports";
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <Box>
         <Router>
           <Routes>
-            <Route path="/" index element={<MultiControll/>} />
+            <Route path="/" index element={<HomePage/>} />
+            <Route path="/multiControll" index element={<MultiControll/>} />
             <Route path="/getInformation"  element={<GetInformation/>} />
             <Route path="/reports"  element={<ReportsPage/>} />
           </Routes>
