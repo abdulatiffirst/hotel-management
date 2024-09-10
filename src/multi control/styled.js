@@ -215,6 +215,17 @@ export const ContainerScheme = styled.div`
           height: 40%;
           /* background-color: blue; */
           gap: 10px;
+          .room {
+            display: block;
+            h4 {
+              width: 100%;
+              height: 10%;
+              rotate: -360deg;
+              .i {
+                rotate: -360deg;
+              }
+            }
+          }
           .r105 {
             width: 30%;
           }
@@ -238,14 +249,7 @@ export const ContainerScheme = styled.div`
           height: 20%;
 
           .leaveHotelButton {
-            background-color: #f44336;
-
-            color: white;
-            border: none;
-            padding: 6px 8px;
-            height: 15px;
-            border-radius: 4px;
-            margin: 0 0 0 5px;
+            background-color: #ef8484;
           }
         }
       }
@@ -259,6 +263,9 @@ export const ContainerScheme = styled.div`
     /* background-color: gree; */
     padding: 10px;
     /* border-top: 1px solid white; */
+    .name{
+      font-size: 13px;
+    }
     .room {
       padding: 3px;
     }
@@ -297,9 +304,19 @@ export const ContainerScheme = styled.div`
         width: 100%;
         height: 30%;
         gap: 10px;
+
         .room {
+          display: block;
           width: 20%;
           padding: 10px;
+          h4 {
+            width: 100%;
+            height: 10%;
+            rotate: -360deg;
+            .i {
+              rotate: -360deg;
+            }
+          }
         }
       }
       .row {
@@ -353,8 +370,17 @@ export const ContainerScheme = styled.div`
       gap: 10px;
 
       .room {
+        display: block;
         width: 20%;
-        height: 100%;
+        padding: 10px;
+        h4 {
+          width: 100%;
+          height: 10%;
+          rotate: -360deg;
+          .i {
+            rotate: -360deg;
+          }
+        }
       }
     }
     .r217-223 {
@@ -384,9 +410,7 @@ export const ToggleButton = styled.div`
 
 export const Table = styled.table`
   /* background-color: yellow; */
- 
- 
- 
+
   margin: 10px 0;
   overflow-y: scroll;
   text-transform: capitalize;
@@ -396,7 +420,7 @@ export const Table = styled.table`
   }
   tr {
     width: 100%;
-   
+
     th {
       background-color: gray;
       color: white;
@@ -485,12 +509,11 @@ export const ElevatorButton = styled.button`
   }
 `;
 export const ContainerTable = styled.div`
-
-width: 100%;
-height: calc(100vh - 70px);
-display: flex;
-align-items: flex-start;
-justify-content: center;
-background-color: #1B4235;
-margin-top: 70px;
-`
+  width: 100%;
+  height: calc(100vh - 70px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: #1b4235;
+  margin-top: 70px;
+`;

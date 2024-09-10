@@ -312,13 +312,13 @@ function MultiControll() {
           </div>
         <div className="miniContainer">
        
-
-        <Link className="link" to="/getInformation">
-          History
-        </Link>
         <Link className="link" to="/">
           Home
           </Link>
+        <Link className="link" to="/getInformation">
+          History
+        </Link>
+       
           <button className="exportToExcel" onClick={handleExportToExcel}><BookIcon/></button>
 
         <Modal
