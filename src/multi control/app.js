@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebaseConfig";
 import { uid } from "uid";
-import { set, ref, onValue, remove, update } from "firebase/database";
+import {
+  set, ref, onValue,
+  // remove,
+  update
+} from "firebase/database";
 import {
   Create,
   Table,
@@ -9,7 +13,7 @@ import {
   UpdateButton,
   ToggleButton,
   ElevatorButton,
-  ContainerTable
+  ContainerTable,
 } from "./styled";
 import { Button, Modal, message, Popconfirm } from "antd";
 import * as XLSX from "xlsx";
@@ -19,8 +23,8 @@ import BedroomParentIcon from "@mui/icons-material/BedroomParent";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 // import { formLabelClasses } from "@mui/material";
 import Switch from "@mui/material/Switch";
-import BookIcon from '@mui/icons-material/Book';
-import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
+import BookIcon from "@mui/icons-material/Book";
+import ControlPointRoundedIcon from "@mui/icons-material/ControlPointRounded";
 function MultiControll() {
   // State for creating data
   const [name, setName] = useState("");
@@ -94,23 +98,7 @@ function MultiControll() {
     setPaymentMethod("");
   };
 
-  // Function to handle leaving hotel
-  const handleLeaveHotel = (value) => {
-    const updatedLeaveHotelStatus = !leaveHotelRows[value.uuid];
-    setLeaveHotelRows((prevLeaveHotelRows) => ({
-      ...prevLeaveHotelRows,
-      [value.uuid]: updatedLeaveHotelStatus,
-    }));
-    const leaveHotelTime = updatedLeaveHotelStatus
-      ? new Date().toLocaleString()
-      : null;
-    update(ref(db, `/${value.uuid}`), {
-      ...value,
-      leaveHotel: updatedLeaveHotelStatus,
-      leaveHotelTime,
-    });
-  };
-
+  
   // Function to read data from Firebase
   useEffect(() => {
     onValue(ref(db), (snapshot) => {
@@ -220,7 +208,7 @@ function MultiControll() {
   // };
 
   // Function to handle exporting data to Excel
- const handleExportToExcel = () => {
+  const handleExportToExcel = () => {
     const tableData = informations.map((value, index) => ({
       No: index + 1,
       Name: value.name,
@@ -255,7 +243,6 @@ function MultiControll() {
     a.click();
   };
 
-  
   //Function popconfirm
   const cancel = (e) => {
     console.log(e);
@@ -264,21 +251,40 @@ function MultiControll() {
 
   const handleOk = () => {
     if (
-      name &&
-      roomNumber &&
-      arrivalDay &&
-      dailyPrice &&
-      birthDate &&
-      paymentMethod &&
-      days
+      (roomNumber >= 101 && roomNumber <= 113) ||
+      (roomNumber >= 201 && roomNumber <= 224)
     ) {
-      writeToDatabase();
-      setIsModalOpen(false);
+      if (
+        name &&
+        roomNumber &&
+        arrivalDay &&
+        dailyPrice &&
+        birthDate &&
+        paymentMethod &&
+        days
+      ) {
+        writeToDatabase();
+        setIsModalOpen(false);
+      } else {
+        message.error("Please fill in all fields");
+      }
     } else {
-      message.error("Please fill in all fields");
+      message.error("Invalid room number. Please enter a room number between 101-113 or 201-224.");
     }
   };
 
+  // Function to handle leaving hotel
+  const handleLeaveHotel = (value) => {
+    const days = prompt("Please enter the number of days you stayed:");
+    if (days !== null && days !== "") {
+      const updatedLeaveHotelStatus = true;
+      setLeaveHotelRows((prevLeaveHotelRows) => ({ ...prevLeaveHotelRows, [value.uuid]: updatedLeaveHotelStatus }));
+      const leaveHotelTime = new Date().toLocaleString();
+      update(ref(db, `/${value.uuid}`), { ...value, leaveHotel: updatedLeaveHotelStatus, leaveHotelTime, days: parseInt(days) });
+    } else {
+      message.error("Please enter the number of days you stayed.");
+    }
+  };
   //Function to choose first floor and second floor
 
   const FirstFloor = () => {
@@ -293,132 +299,143 @@ function MultiControll() {
   return (
     <ContainerScheme>
       <div className="Buttons">
-<div className="miniContainer">
-        <Button style={{backgroundColor:"#1B4235", color:"white", fontSize:"100px", width:"50px", height:"50px",borderRadius:"100%"}}  className="showModal" onClick={showModal}>
-         <ControlPointRoundedIcon/>
-        </Button>
-     
-        <ElevatorButton onClick={FirstFloor}>1</ElevatorButton>
-          
-          <ElevatorButton onClick={SecondFloor}>2</ElevatorButton>
-          <ToggleButton    style={{backgroundColor:"#D1D8D6"}}>
-          <Switch
-            checked={checked}
-            onChange={handleSwitch}
-              inputProps={{ "aria-label": "controlled" }}
-              ToggleButton    style={{color:"#1B4235"}}
-          />
-          </ToggleButton>
-          </div>
         <div className="miniContainer">
-       
-        <Link className="link" to="/">
-          Home
+          <Button
+            style={{
+              backgroundColor: "#1B4235",
+              color: "white",
+              fontSize: "100px",
+              width: "50px",
+              height: "50px",
+              borderRadius: "100%",
+            }}
+            className="showModal"
+            onClick={showModal}
+          >
+            <ControlPointRoundedIcon />
+          </Button>
+
+          <ElevatorButton onClick={FirstFloor}>1</ElevatorButton>
+
+          <ElevatorButton onClick={SecondFloor}>2</ElevatorButton>
+          <ToggleButton style={{ backgroundColor: "#D1D8D6" }}>
+            <Switch
+              checked={checked}
+              onChange={handleSwitch}
+              inputProps={{ "aria-label": "controlled" }}
+              ToggleButton
+              style={{ color: "#1B4235" }}
+            />
+          </ToggleButton>
+        </div>
+        <div className="miniContainer">
+          <Link className="link" to="/">
+            Home
           </Link>
-        <Link className="link" to="/getInformation">
-          History
-        </Link>
-       
-          <button className="exportToExcel" onClick={handleExportToExcel}><BookIcon/></button>
+          <Link className="link" to="/getInformation">
+            History
+          </Link>
 
-        <Modal
-          title="Add Guest"
-          open={isModalOpen}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
+          <button className="exportToExcel" onClick={handleExportToExcel}>
+            <BookIcon />
+          </button>
 
-          <Create>
-            <input
-              type="text"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <input
-              type="date"
-              placeholder="Date of Birth"
-              value={birthDate}
-              onChange={(e) => setBirthDate(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Passport series"
-              value={passportSeries}
-              onChange={(e) => setPassportSeries(e.target.value.toUpperCase())}
-            />
-            <input
-              type="number"
-              placeholder="Room Number"
-              value={roomNumber}
-              onChange={(e) => setRoomNumber(e.target.value)}
-            />
-            <input
-              type="date"
-              placeholder="Arrival day"
-              value={arrivalDay}
-              onChange={(e) => setArrivalDay(e.target.value)}
-            />
-            <input
-              type="date"
-              placeholder="Leaving day"
-              value={leavingDay}
-              onChange={(e) => setLeavingDay(e.target.value)}
-            />
-            <input
-              type="number"
-              placeholder="Daily Price"
-              value={dailyPrice}
-              onChange={(e) => setDailyPrice(e.target.value)}
-            />
-            <input
-              type="number"
-              placeholder="Days"
-              value={days}
-              onChange={(e) => setDays(e.target.value)}
-            />
-            <select
-              value={paymentMethod}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            >
-              <option value="">Select payment method</option>
-              <option value="Cash">Cash</option>
-              <option value="Debit Card">Debit Card</option>
-              <option value="Contract">Contract</option>
-            </select>
+          <Modal
+            title="Add Guest"
+            open={isModalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <Create>
+              <input
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <input
+                type="date"
+                placeholder="Date of Birth"
+                value={birthDate}
+                onChange={(e) => setBirthDate(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Passport series"
+                value={passportSeries}
+                onChange={(e) =>
+                  setPassportSeries(e.target.value.toUpperCase())
+                }
+              />
+              <input
+                type="number"
+                placeholder="Room Number"
+                value={roomNumber}
+                onChange={(e) => setRoomNumber(e.target.value)}
+              />
+              <input
+                type="date"
+                placeholder="Arrival day"
+                value={arrivalDay}
+                onChange={(e) => setArrivalDay(e.target.value)}
+              />
+              <input
+                type="date"
+                placeholder="Leaving day"
+                value={leavingDay}
+                onChange={(e) => setLeavingDay(e.target.value)}
+              />
+              <input
+                type="number"
+                placeholder="Daily Price"
+                value={dailyPrice}
+                onChange={(e) => setDailyPrice(e.target.value)}
+              />
+              <input
+                type="number"
+                placeholder="Days"
+                value={days}
+                onChange={(e) => setDays(e.target.value)}
+              />
+              <select
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              >
+                <option value="">Select payment method</option>
+                <option value="Cash">Cash</option>
+                <option value="Debit Card">Debit Card</option>
+                <option value="Contract">Contract</option>
+              </select>
 
-            {editInformations ? (
-              <div>
-                <button onClick={handleSubmitChange}>Submit Change</button>{" "}
-                <button
-                  onClick={() => {
-                    setEditInformations(false);
-                    setName("");
-                    setPhoneNumber("");
-                    setArrivalDay("");
-                    setRoomNumber("");
-                    setLeavingDay("");
-                    setDailyPrice("");
-                    setDays("");
-                    setBirthDate("");
-                    setPassportSeries("");
-                    setPaymentMethod("");
-                    setIsModalOpen(false);
-                  }}
-                >
-                  X
-                </button>
-              </div>
-            ) : (
-              <></>
-            )}
-          </Create>
+              {editInformations ? (
+                <div>
+                  <button onClick={handleSubmitChange}>Submit Change</button>{" "}
+                  <button
+                    onClick={() => {
+                      setEditInformations(false);
+                      setName("");
+                      setPhoneNumber("");
+                      setArrivalDay("");
+                      setRoomNumber("");
+                      setLeavingDay("");
+                      setDailyPrice("");
+                      setDays("");
+                      setBirthDate("");
+                      setPassportSeries("");
+                      setPaymentMethod("");
+                      setIsModalOpen(false);
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
+              ) : (
+                <></>
+              )}
+            </Create>
+          </Modal>
 
-        </Modal>
-
-    
-
-        {/* <button className="exportToExcel" onClick={handleExportToExcel}>
+          {/* <button className="exportToExcel" onClick={handleExportToExcel}>
           Export To Excel
         </button> */}
         </div>
@@ -990,7 +1007,7 @@ function MultiControll() {
                         {index + 1}) {value.name}
                       </p>
                       <p className="arrivalDay">
-                        {value.arrivalDay}/{value.leaveHotel}
+                        {value.arrivalDay}/{value.Hotel}
                       </p>
                       {/* <p className="dailyPrice">{value.dailyPrice}/Day</p> */}
 
@@ -1203,7 +1220,7 @@ function MultiControll() {
           <div className="floor-titel">
             <h1>2nd FLOOR</h1>
           </div>
-         
+
           <div className="secondFloorScheme">
             <div className="column-1">
               <div className="r212-216">
@@ -1464,9 +1481,7 @@ function MultiControll() {
                         handleOpenModal();
                       }}
                     >
-                      <b>209</b>|<BedroomChildIcon className="i" />
-                      <BedroomChildIcon className="i" />
-                      <BedroomChildIcon className="i" />
+                      <b>209</b>|<BedroomParentIcon className="i" />L
                     </h4>
                     {informations
                       .filter((value) => value.roomNumber === "209")
@@ -1551,8 +1566,12 @@ function MultiControll() {
                           handleOpenModal();
                         }}
                       >
-                        <b>208</b>|<BedroomParentIcon className="i" />
-                        <BedroomChildIcon className="i" />
+                        <b>208</b>|
+                        <div>
+                          <BedroomChildIcon className="i" />
+                          <BedroomChildIcon className="i" />
+                          <BedroomChildIcon className="i" />
+                        </div>
                       </h4>
                       {informations
                         .filter((value) => value.roomNumber === "208")
@@ -1948,8 +1967,7 @@ function MultiControll() {
                     handleOpenModal();
                   }}
                 >
-                  <b>218</b>|<BedroomChildIcon className="i" />
-                  <BedroomChildIcon className="i" />
+                  <b>218</b>|<BedroomParentIcon className="i" />L
                 </h4>
                 {informations
                   .filter((value) => value.roomNumber === "218")
@@ -2114,70 +2132,71 @@ function MultiControll() {
             </div>
           ))}
       </Modal>
-      <ContainerTable style={switch1 ? { display: "none" } : { display: "flex" }}>
-      <Table >
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Room Number</th>
-            <th>Arrival Day</th>
-            <th>Leaving Day</th>
-            <th>Daily Price</th>
-            <th>Whole Price</th>
-            <th>Payment Method</th>
+      <ContainerTable
+        style={switch1 ? { display: "none" } : { display: "flex" }}
+      >
+        <Table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Name</th>
+              <th>Room Number</th>
+              <th>Arrival Day</th>
+              <th>Leaving Day</th>
+              <th>Daily Price</th>
+              <th>Whole Price</th>
+              <th>Payment Method</th>
 
-            <th>Update</th>
-            <th>Leave Hotel</th>
-          </tr>
-        </thead>
-        <tbody>
-          {informations.map((value, index) => (
-            <tr
-              style={{
-                display: leaveHotelRows[value.uuid] ? "none" : "",
-              }}
-              key={value.uuid}
-            >
-              <td>{index + 1}</td>
-              <td>{value.name}</td>
-              <td>{value.roomNumber}</td>
-              <td>{value.arrivalDay}</td>
-              <td>{value.leavingDay}</td>
-              <td>{value.dailyPrice}</td>
-              <td>{value.days * value.dailyPrice}</td>
-              <td>{value.paymentMethod}</td>
-              <td>
-                <button
-                  className="updateButton"
-                  onClick={() => handleEdit(value)}
-                >
-                  Edit
-                </button>
-              </td>
-              <td>
-                <Popconfirm
-                  title=""
-                  description="Leave?"
-                  onConfirm={() => handleLeaveHotel(value)}
-                  onCancel={cancel}
-                  okText="Yes"
-                  cancelText="No"
-                  className="leaveHotelButton"
-                >
-                  <Button danger>
-                    <LogoutRoundedIcon />
-                  </Button>
-                </Popconfirm>
-              </td>
+              <th>Update</th>
+              <th>Leave Hotel</th>
             </tr>
-          ))}
-        </tbody>
+          </thead>
+          <tbody>
+            {informations.map((value, index) => (
+              <tr
+                style={{
+                  display: leaveHotelRows[value.uuid] ? "none" : "",
+                }}
+                key={value.uuid}
+              >
+                <td>{index + 1}</td>
+                <td>{value.name}</td>
+                <td>{value.roomNumber}</td>
+                <td>{value.arrivalDay}</td>
+                <td>{value.leavingDay}</td>
+                <td>{value.dailyPrice}</td>
+                <td>{value.days * value.dailyPrice}</td>
+                <td>{value.paymentMethod}</td>
+                <td>
+                  <button
+                    className="updateButton"
+                    onClick={() => handleEdit(value)}
+                  >
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <Popconfirm
+                    title=""
+                    description="Leave?"
+                    onConfirm={() => handleLeaveHotel(value)}
+                    onCancel={cancel}
+                    okText="Yes"
+                    cancelText="No"
+                    className="leaveHotelButton"
+                  >
+                    <Button danger>
+                      <LogoutRoundedIcon />
+                    </Button>
+                  </Popconfirm>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </Table>
-        </ContainerTable>
+      </ContainerTable>
     </ContainerScheme>
   );
 }
 
 export default MultiControll;
-

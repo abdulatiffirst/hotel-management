@@ -2,7 +2,7 @@
 function ReportsPage() {
     return (
         <div>
-           Reports
+        
         </div>
     )
 }

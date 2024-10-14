@@ -329,9 +329,9 @@ export const ContainerScheme = styled.div`
           flex-direction: column;
           height: 100%;
           width: 30%;
-          gap: 10px;
+          gap: 5px;
           .i {
-            display: none;
+            /* display: none; */
           }
           .room {
             height: 33%;
@@ -340,26 +340,29 @@ export const ContainerScheme = styled.div`
       }
       .center {
         display: flex;
+       
         .i {
-          display: none;
+          /* display: none; */
         }
         width: 60%;
         .room {
           height: 33%;
+       
         }
         .centerColumn-1 {
           width: 50%;
           height: 100%;
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 5px;
+       
         }
         .centerColumn-2 {
           width: 50%;
           height: 100%;
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 5px;
         }
       }
     }
@@ -516,4 +519,5 @@ export const ContainerTable = styled.div`
   justify-content: center;
   background-color: #1b4235;
   margin-top: 70px;
+  overflow-y: scroll;
 `;
