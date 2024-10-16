@@ -151,7 +151,79 @@ function GetInformation() {
         return new Date(b.arrivalDay) - new Date(a.arrivalDay);
       }
     });
+  const compareDates = (
+    arrivalDay,
+    registrationDay,
+    leavingDay,
+    leaveHotelTime
+  ) => {
+    const isValidDate = (dateString) => {
+      const date = new Date(dateString);
+      return !isNaN(date.getTime());
+    };
 
+    // Check if arrivalDay and registrationDay are valid
+    if (isValidDate(arrivalDay) && isValidDate(registrationDay)) {
+      const arrivalDate = new Date(arrivalDay);
+      const registrationDate = new Date(registrationDay);
+
+      if (
+        arrivalDate.toISOString().split("T")[0] !==
+        registrationDate.toISOString().split("T")[0]
+      ) {
+        return "red"; // Arrival and registration days do not match
+      }
+    } else {
+      return "red"; // One of the dates is invalid
+    }
+
+    // Check if leavingDay and leaveHotelTime are valid
+    if (leavingDay && leaveHotelTime) {
+      if (isValidDate(leavingDay) && isValidDate(leaveHotelTime)) {
+        const leavingDate = new Date(leavingDay);
+        const leaveHotelDate = new Date(leaveHotelTime);
+
+        if (
+          leavingDate.toISOString().split("T")[0] !==
+          leaveHotelDate.toISOString().split("T")[0]
+        ) {
+          return "red"; // Leaving day and leave hotel time do not match
+        }
+      } else {
+        return "red"; // One of the dates is invalid
+      }
+    }
+
+    return "black"; // All checks passed
+  };
+
+  const calculateIncome = (informations) => {
+    const income = {
+      contract: 0,
+      cash: 0,
+      debitCard: 0,
+      total: 0,
+    };
+
+    informations.forEach((info) => {
+      const paymentMethod = info.paymentMethod.toLowerCase();
+      const wholePrice = info.days * info.dailyPrice;
+
+      if (paymentMethod === "contract") {
+        income.contract += wholePrice;
+      } else if (paymentMethod === "cash") {
+        income.cash += wholePrice;
+      } else if (paymentMethod === "debit card") {
+        income.debitCard += wholePrice;
+      }
+
+      income.total += wholePrice;
+    });
+
+    return income;
+  };
+
+  const income = calculateIncome(informations);
   return (
     <Container>
       <Modal
@@ -257,6 +329,13 @@ function GetInformation() {
           value={search}
           onChange={handleSearch}
         />
+        <div className="incomeReport">
+         
+        <p>Contract:<br/> {income.contract.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).replace(' ', ' ')}</p>
+<p>Cash:<br/>{income.cash.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).replace(' ', ' ')}</p>
+<p>Debit Card:<br/> {income.debitCard.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).replace(' ', ' ')}</p>
+<p>Total:<br/> {income.total.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).replace(' ', ' ')}</p>
+        </div>
       </div>
 
       <Table>
@@ -282,7 +361,17 @@ function GetInformation() {
         <tbody>
           {filteredInformations.map((value, index) => {
             return (
-              <tr key={value.uuid}>
+              <tr
+                key={value.uuid}
+                style={{
+                  backgroundColorolor: compareDates(
+                    value.arrivalDay,
+                    value.registrationTime,
+                    value.leavingDay,
+                    value.leaveHotelTime
+                  ),
+                }}
+              >
                 <td>{index + 1}</td>
                 <td>{value.name}</td>
                 <td className="passportSeries">{value.passportSeries}</td>

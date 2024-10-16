@@ -9,6 +9,8 @@ export const UpdateButton = styled.button`
   margin: 3px 0;
 `;
 
+
+
 export const ContainerScheme = styled.div`
   width: 100%;
   background: rgb(20, 42, 32);
@@ -263,7 +265,7 @@ export const ContainerScheme = styled.div`
     /* background-color: gree; */
     padding: 10px;
     /* border-top: 1px solid white; */
-    .name{
+    .name {
       font-size: 13px;
     }
     .room {
@@ -340,14 +342,13 @@ export const ContainerScheme = styled.div`
       }
       .center {
         display: flex;
-       
+
         .i {
           /* display: none; */
         }
         width: 60%;
         .room {
           height: 33%;
-       
         }
         .centerColumn-1 {
           width: 50%;
@@ -355,7 +356,6 @@ export const ContainerScheme = styled.div`
           display: flex;
           flex-direction: column;
           gap: 5px;
-       
         }
         .centerColumn-2 {
           width: 50%;
@@ -464,7 +464,32 @@ export const Table = styled.table`
 `;
 
 export const Create = styled.div`
-  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .suggestions {
+    /* background-color: green; */
+    height: 70px;
+    overflow: auto;
+    width: 88%;
+    .suggestion {
+      /* background-color: red; */
+      margin: 1px 0;
+      text-transform: capitalize;
+      border-radius: 4px;
+      padding:1px 3px;
+      display: flex;
+      justify-content: space-between;
+      /* transition-duration: 0.6s; */
+      cursor: pointer;
+      &:hover{
+        background-color: green;
+        color: white;
+      }
+    }
+   
+  }
 
   input {
     width: 90%;

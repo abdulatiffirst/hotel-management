@@ -14,12 +14,25 @@ export const Container = styled.div`
   }
 
   .buttonsContainer2 {
-    width: 90%;
+    width: 100%;
     padding: 15px 0 20px 0;
     display: flex;
     align-items: center;
-    justify-content: center;
-    
+    justify-content: space-around;
+ 
+    .incomeReport{
+      width:40%;
+      display: flex;
+      justify-content: space-around;
+      p{
+        
+        color: white;
+       
+        border: 1px solid white;
+        border-radius: 10px;
+        padding:3px 8px;
+      }
+    }
     .link2 {
       color: #1b4235;
         text-decoration: none;
@@ -30,7 +43,7 @@ export const Container = styled.div`
         margin: 0 7px;
     }
     input {
-      width: 40%;
+      width: 30%;
       height: 30px;
       margin-left: 40px;
       padding: 3px;

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { db } from "../firebaseConfig";
 import { uid } from "uid";
 import {
-  set, ref, onValue,
+  set,
+  ref,
+  onValue,
   // remove,
-  update
+  update,
 } from "firebase/database";
 import {
   Create,
@@ -14,6 +16,7 @@ import {
   ToggleButton,
   ElevatorButton,
   ContainerTable,
+  ContainerModal,
 } from "./styled";
 import { Button, Modal, message, Popconfirm } from "antd";
 import * as XLSX from "xlsx";
@@ -98,7 +101,6 @@ function MultiControll() {
     setPaymentMethod("");
   };
 
-  
   // Function to read data from Firebase
   useEffect(() => {
     onValue(ref(db), (snapshot) => {
@@ -250,6 +252,7 @@ function MultiControll() {
   };
 
   const handleOk = () => {
+    if (editInformations) return;
     if (
       (roomNumber >= 101 && roomNumber <= 113) ||
       (roomNumber >= 201 && roomNumber <= 224)
@@ -269,7 +272,9 @@ function MultiControll() {
         message.error("Please fill in all fields");
       }
     } else {
-      message.error("Invalid room number. Please enter a room number between 101-113 or 201-224.");
+      message.error(
+        "Invalid room number. Please enter a room number between 101-113 or 201-224."
+      );
     }
   };
 
@@ -278,9 +283,17 @@ function MultiControll() {
     const days = prompt("Please enter the number of days you stayed:");
     if (days !== null && days !== "") {
       const updatedLeaveHotelStatus = true;
-      setLeaveHotelRows((prevLeaveHotelRows) => ({ ...prevLeaveHotelRows, [value.uuid]: updatedLeaveHotelStatus }));
+      setLeaveHotelRows((prevLeaveHotelRows) => ({
+        ...prevLeaveHotelRows,
+        [value.uuid]: updatedLeaveHotelStatus,
+      }));
       const leaveHotelTime = new Date().toLocaleString();
-      update(ref(db, `/${value.uuid}`), { ...value, leaveHotel: updatedLeaveHotelStatus, leaveHotelTime, days: parseInt(days) });
+      update(ref(db, `/${value.uuid}`), {
+        ...value,
+        leaveHotel: updatedLeaveHotelStatus,
+        leaveHotelTime,
+        days: parseInt(days),
+      });
     } else {
       message.error("Please enter the number of days you stayed.");
     }
@@ -296,6 +309,22 @@ function MultiControll() {
     setSecondFloorVisible(true);
   };
 
+  const [suggestions, setSuggestions] = useState([]);
+  const [selectedSuggestion, setSelectedSuggestion] = useState(null);
+
+  const handleAutofill = (name) => {
+    const filteredSuggestions = informations.filter((info) =>
+      info.name.toLowerCase().includes(name.toLowerCase())
+    );
+    setSuggestions(filteredSuggestions);
+  };
+
+  const handleSelectSuggestion = (suggestion) => {
+    setSelectedSuggestion(suggestion);
+    setName(suggestion.name);
+    setBirthDate(suggestion.birthDate);
+    setPassportSeries(suggestion.passportSeries);
+  };
   return (
     <ContainerScheme>
       <div className="Buttons">
@@ -343,96 +372,119 @@ function MultiControll() {
           <Modal
             title="Add Guest"
             open={isModalOpen}
-            onOk={handleOk}
+            onOk={editInformations ? null : handleOk}
             onCancel={handleCancel}
           >
-            <Create>
-              <input
-                type="text"
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <input
-                type="date"
-                placeholder="Date of Birth"
-                value={birthDate}
-                onChange={(e) => setBirthDate(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Passport series"
-                value={passportSeries}
-                onChange={(e) =>
-                  setPassportSeries(e.target.value.toUpperCase())
-                }
-              />
-              <input
-                type="number"
-                placeholder="Room Number"
-                value={roomNumber}
-                onChange={(e) => setRoomNumber(e.target.value)}
-              />
-              <input
-                type="date"
-                placeholder="Arrival day"
-                value={arrivalDay}
-                onChange={(e) => setArrivalDay(e.target.value)}
-              />
-              <input
-                type="date"
-                placeholder="Leaving day"
-                value={leavingDay}
-                onChange={(e) => setLeavingDay(e.target.value)}
-              />
-              <input
-                type="number"
-                placeholder="Daily Price"
-                value={dailyPrice}
-                onChange={(e) => setDailyPrice(e.target.value)}
-              />
-              <input
-                type="number"
-                placeholder="Days"
-                value={days}
-                onChange={(e) => setDays(e.target.value)}
-              />
-              <select
-                value={paymentMethod}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              >
-                <option value="">Select payment method</option>
-                <option value="Cash">Cash</option>
-                <option value="Debit Card">Debit Card</option>
-                <option value="Contract">Contract</option>
-              </select>
-
-              {editInformations ? (
-                <div>
-                  <button onClick={handleSubmitChange}>Submit Change</button>{" "}
-                  <button
-                    onClick={() => {
-                      setEditInformations(false);
-                      setName("");
-                      setPhoneNumber("");
-                      setArrivalDay("");
-                      setRoomNumber("");
-                      setLeavingDay("");
-                      setDailyPrice("");
-                      setDays("");
-                      setBirthDate("");
-                      setPassportSeries("");
-                      setPaymentMethod("");
-                      setIsModalOpen(false);
-                    }}
-                  >
-                    X
-                  </button>
-                </div>
-              ) : (
-                <></>
+            
+              <Create>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    handleAutofill(e.target.value);
+                  }}
+                />
+                
+              {name !== "" && suggestions.length > 0 && (
+                <ul className="suggestions">
+                  {suggestions.map((suggestion) => (
+                    <li
+                      className="suggestion"
+                      key={suggestion.uuid}
+                      onClick={() => handleSelectSuggestion(suggestion)}
+                    >
+                      <p>{suggestion.name} </p>
+                     <p> {suggestion.passportSeries}</p>
+                    </li>
+                  ))}
+                </ul>
               )}
-            </Create>
+
+                <input
+                  type="date"
+                  placeholder="Date of Birth"
+                  value={birthDate}
+                  onChange={(e) => setBirthDate(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Passport series"
+                  value={passportSeries}
+                  onChange={(e) =>
+                    setPassportSeries(e.target.value.toUpperCase())
+                  }
+                />
+                <input
+                  type="number"
+                  placeholder="Room Number"
+                  value={roomNumber}
+                  onChange={(e) => setRoomNumber(e.target.value)}
+                />
+                <input
+                  type="date"
+                  placeholder="Arrival day"
+                  value={arrivalDay}
+                  onChange={(e) => setArrivalDay(e.target.value)}
+                />
+                <input
+                  type="date"
+                  placeholder="Leaving day"
+                  value={leavingDay}
+                  onChange={(e) => setLeavingDay(e.target.value)}
+                />
+                <input
+                  type="number"
+                  placeholder="Daily Price"
+                  value={dailyPrice}
+                  onChange={(e) => setDailyPrice(e.target.value)}
+                />
+                <input
+                  type="number"
+                  placeholder="Days"
+                  value={days}
+                  onChange={(e) => setDays(e.target.value)}
+                />
+                <select
+                  value={paymentMethod}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                >
+                  <option value="">Select payment method</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Debit Card">Debit Card</option>
+                  <option value="Contract">Contract</option>
+                </select>
+
+                {editInformations ? (
+                  <div>
+                    <button style={{width:"200px", color:"white"}} onClick={handleSubmitChange}>Submit Change</button>{" "}
+                    <button
+                      onClick={() => {
+                        setEditInformations(false);
+                        setName("");
+                        setPhoneNumber("");
+                        setArrivalDay("");
+                        setRoomNumber("");
+                        setLeavingDay("");
+                        setDailyPrice("");
+                        setDays("");
+                        setBirthDate("");
+                        setPassportSeries("");
+                        setPaymentMethod("");
+                        setIsModalOpen(false);
+                    }}
+                    style={{width:"200px", color:"white"}}
+                    >
+                      X
+                    </button>
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </Create>
+
+          
           </Modal>
 
           {/* <button className="exportToExcel" onClick={handleExportToExcel}>
@@ -1627,7 +1679,7 @@ function MultiControll() {
                           handleOpenModal();
                         }}
                       >
-                        <b>219</b>|<BedroomParentIcon className="i" />
+                        <b>219</b>|<BedroomChildIcon className="i" /><BedroomChildIcon className="i" />
                       </h4>
                       {informations
                         .filter((value) => value.roomNumber === "219")
