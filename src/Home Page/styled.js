@@ -39,3 +39,46 @@ export const Container = styled.div`
     background-color: #d4dbd9;
   }
 `;
+
+export const Create = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 24px;
+
+  input, select {
+    width: 100%;
+    height: 36px;
+    padding: 6px 10px;
+    border: 1px solid #3c3c3c;
+    border-radius: 8px;
+    background: #ffffff;
+  }
+
+  button {
+    width: 200px;
+    padding: 10px;
+    background-color: #1677ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+`;
+
+export const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+
+  th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    background: #fff;
+  }
+
+  thead th {
+    background: #f2f2f2;
+  }
+`;

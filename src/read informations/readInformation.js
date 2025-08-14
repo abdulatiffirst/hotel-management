@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Container, Create, Table } from "./styled";
 import { ref, onValue, remove, update } from "firebase/database";
 import { db } from "../firebaseConfig";
@@ -48,6 +48,7 @@ function GetInformation() {
   // State for leave hotel functionality
   const [leaveHotelRows, setLeaveHotelRows] = useState({});
   const [informations, setInformations] = useState([]);
+  const [loading, setLoading] = useState(true);
   // State for editing data
   const [
     // editInformations,
@@ -106,7 +107,8 @@ function GetInformation() {
   };
   //Function to get information from firebase
   useEffect(() => {
-    onValue(ref(db), (snapshot) => {
+    setLoading(true);
+    const unsubscribe = onValue(ref(db), (snapshot) => {
       const data = snapshot.val();
       if (data !== null) {
         const sortedData = Object.values(data).sort((a, b) => {
@@ -121,7 +123,9 @@ function GetInformation() {
         });
         setLeaveHotelRows(leaveHotelStatus);
       }
+      setLoading(false);
     });
+    return () => typeof unsubscribe === 'function' && unsubscribe();
   }, []);
   // Function to handle deleting data
   const handleDelete = (inf) => {
@@ -131,26 +135,34 @@ function GetInformation() {
   //Function popconfirm
 
   // Function to filter data based on search input
-  const filteredInformations = informations
-    .filter((info) => {
-      return (
-        info.name.toLowerCase().includes(search.toLowerCase()) ||
-        info.passportSeries.toLowerCase().includes(search.toLowerCase()) ||
-        info.birthDate.toLowerCase().includes(search.toLowerCase()) ||
-        info.roomNumber.toString().includes(search) ||
-        info.arrivalDay.toLowerCase().includes(search.toLowerCase()) ||
-        info.leavingDay.toLowerCase().includes(search.toLowerCase())
-      );
-    })
-    .sort((a, b) => {
-      if (!a.leaveHotel && b.leaveHotel) return -1; // prioritize those who haven't checked out
+  const filteredInformations = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    const base = q
+      ? informations.filter((info) => {
+          const name = (info.name || '').toLowerCase();
+          const ps = (info.passportSeries || '').toLowerCase();
+          const birth = (info.birthDate || '').toLowerCase();
+          const arrival = (info.arrivalDay || '').toLowerCase();
+          const leaving = (info.leavingDay || '').toLowerCase();
+          return (
+            name.includes(q) ||
+            ps.includes(q) ||
+            birth.includes(q) ||
+            String(info.roomNumber || '').includes(q) ||
+            arrival.includes(q) ||
+            leaving.includes(q)
+          );
+        })
+      : informations;
+    return base.slice().sort((a, b) => {
+      if (!a.leaveHotel && b.leaveHotel) return -1;
       if (a.leaveHotel && !b.leaveHotel) return 1;
       if (a.arrivalDay === b.arrivalDay) {
         return a.roomNumber - b.roomNumber;
-      } else {
-        return new Date(b.arrivalDay) - new Date(a.arrivalDay);
       }
+      return new Date(b.arrivalDay) - new Date(a.arrivalDay);
     });
+  }, [informations, search]);
   const compareDates = (
     arrivalDay,
     registrationDay,
@@ -223,7 +235,23 @@ function GetInformation() {
     return income;
   };
 
-  const income = calculateIncome(informations);
+  const income = useMemo(() => calculateIncome(informations), [informations]);
+  
+  if (loading) {
+    return (
+      <div style={{ padding: 16, textAlign: 'center' }}>
+        <div style={{ fontSize: 18, marginBottom: 16 }}>Loading history...</div>
+        <div style={{ width: 40, height: 40, border: '4px solid #f3f3f3', borderTop: '4px solid #3498db', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto' }}></div>
+        <style>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
+    );
+  }
+  
   return (
     <Container>
       <Modal
@@ -364,7 +392,7 @@ function GetInformation() {
               <tr
                 key={value.uuid}
                 style={{
-                  backgroundColorolor: compareDates(
+                  backgroundColor: compareDates(
                     value.arrivalDay,
                     value.registrationTime,
                     value.leavingDay,
